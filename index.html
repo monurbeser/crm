@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini CRM Web App</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <button onclick="switchTab('meetings')">Toplantılar</button>
+      <button onclick="switchTab('opportunities')">Fırsatlar</button>
+      <button onclick="switchTab('dashboard')">Dashboard</button>
+    </nav>
+    <main>
+      <section id="meetings" class="tab">
+        <h2>Toplantılar</h2>
+        <button onclick="addMeetingRow()">+ Ekle</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Firma Adı</th>
+              <th>Toplantı Tarihi</th>
+              <th>Ürün</th>
+              <th>Toplantı Türü</th>
+              <th>Satış Sorumlusu</th>
+              <th>Sil</th>
+            </tr>
+          </thead>
+          <tbody id="meetings-table"></tbody>
+        </table>
+      </section>
+
+      <section id="opportunities" class="tab">
+        <h2>Fırsatlar</h2>
+        <label>
+          <input type="radio" name="view" value="kanban" checked onchange="toggleView(this.value)" /> Kanban
+        </label>
+        <label>
+          <input type="radio" name="view" value="list" onchange="toggleView(this.value)" /> Liste
+        </label>
+        <button onclick="addOpportunity()">+ Fırsat Ekle</button>
+        <div id="kanban-view" class="kanban">
+          <div class="column" data-status="Teklif">
+            <h3>İlk Teklif Aşaması</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+          <div class="column" data-status="Revize">
+            <h3>Revize Teklif & Değerlendirme</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+          <div class="column" data-status="Forecast">
+            <h3>İhtimal Yüksek/Forecast</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+          <div class="column" data-status="Kazanıldı" style="background:#e0f8e0">
+            <h3>Kazanıldı</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+          <div class="column" data-status="Kaybedildi" style="background:#f8e0e0">
+            <h3>Kaybedildi</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+          <div class="column" data-status="Beklemede" style="background:#f8e0e0">
+            <h3>Beklemede/Stall</h3>
+            <div class="count-value"></div>
+            <div class="items"></div>
+          </div>
+        </div>
+        <table id="list-view" style="display:none">
+          <thead>
+            <tr><th>Fırsat Adı</th><th>Teklif ($)</th><th>Ürün</th></tr>
+          </thead>
+          <tbody id="opportunities-list"></tbody>
+        </table>
+      </section>
+
+      <section id="dashboard" class="tab">
+        <h2>Dashboard</h2>
+        <canvas id="opportunityChart"></canvas>
+        <canvas id="meetingChart"></canvas>
+        <canvas id="statusPie"></canvas>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
